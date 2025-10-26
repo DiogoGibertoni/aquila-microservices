@@ -1,0 +1,187 @@
+openapi: 3.0.0
+info:
+  title: Sistema Aquila - API
+  version: 1.0.0
+  description: API para monitoramento e comparação de preços
+
+servers:
+  - url: http://localhost:3000
+    description: BFF Server
+
+paths:
+  # BFF - Agregação
+  /api/products/{id}/complete:
+    get:
+      summary: Busca produto com histórico de preços (agregação)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Produto com preços agregados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  product:
+                    $ref: '#/components/schemas/Product'
+                  prices:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Price'
+
+  # Product Service
+  /api/products:
+    get:
+      summary: Lista todos os produtos
+      responses:
+        '200':
+          description: Lista de produtos
+    post:
+      summary: Cria novo produto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201':
+          description: Produto criado
+
+  /api/products/{id}:
+    get:
+      summary: Busca produto por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Produto encontrado
+    put:
+      summary: Atualiza produto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: Produto atualizado
+    delete:
+      summary: Remove produto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Produto removido
+
+  # Price Service
+  /api/prices:
+    get:
+      summary: Lista todos os preços
+      responses:
+        '200':
+          description: Lista de preços
+    post:
+      summary: Registra novo preço (via evento)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Price'
+      responses:
+        '201':
+          description: Preço registrado
+
+  /api/prices/product/{productId}:
+    get:
+      summary: Busca preços de um produto
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Histórico de preços
+
+  # Function - Análise de Preços
+  /api/analyze-price:
+    post:
+      summary: Analisa se é promoção falsa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: string
+                current_price:
+                  type: number
+      responses:
+        '200':
+          description: Análise concluída
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        external_id:
+          type: string
+        site_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+
+    Price:
+      type: object
+      properties:
+        id:
+          type: integer
+        product_id:
+          type: string
+        price:
+          type: number
+        original_price:
+          type: number
+        is_promotion:
+          type: boolean
+        is_fake_promotion:
+          type: boolean
+        scraped_at:
+          type: string
+          format: date-time
+```

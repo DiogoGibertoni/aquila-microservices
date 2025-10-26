@@ -1,0 +1,14 @@
+cmd(
+echo node_modules/
+echo dist/
+echo build/
+echo .env
+echo .DS_Store
+echo Thumbs.db
+echo .vscode/
+echo .idea/
+echo .vs/
+echo .cursor/
+echo estrutura.txt
+echo -p/
+) > .gitignore
