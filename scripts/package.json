@@ -1,0 +1,16 @@
+{
+  "name": "aquila-scripts",
+  "version": "1.0.0",
+  "description": "Scripts para popular o banco de dados do Aquila",
+  "main": "populate-database.js",
+  "scripts": {
+    "init-db": "node init-db.js",
+    "init-azure": "node init-azure-db.js",
+    "clean": "node clean-database.js",
+    "populate": "node populate-database.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "mssql": "^10.0.4"
+  }
+}

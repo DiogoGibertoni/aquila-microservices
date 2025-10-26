@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(mkdir:*)",
+      "Bash(docker logs:*)",
+      "Bash(docker ps:*)",
+      "Bash(docker cp:*)",
+      "Bash(docker exec:*)",
+      "Bash(winpty docker exec -it aquila-sqlserver-local /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P StrongPassword123! -Q \"CREATE DATABASE aquilaDB\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

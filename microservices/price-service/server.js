@@ -16,7 +16,10 @@ const config = {
   password: process.env.DB_PASSWORD,
   options: {
     encrypt: true, // Necessário para Azure SQL
-    enableArithAbort: true
+    trustServerCertificate: false,
+    enableArithAbort: true,
+    connectTimeout: 30000,
+    requestTimeout: 30000
   }
 };
 

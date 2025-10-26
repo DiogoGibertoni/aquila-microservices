@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aquila - Monitoramento de Preços</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Aquila - Monitoramento de Preços</h1>
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-view="list">📋 Lista de Produtos</button>
+                <button class="nav-tab" data-view="add">➕ Adicionar Produto</button>
+                <button class="nav-tab" data-view="search">🔍 Buscar por ID</button>
+            </nav>
+        </header>
+
+        <!-- VIEW 1: Lista de Produtos -->
+        <div id="listView" class="view active">
+            <div class="view-header">
+                <h2>Produtos Monitorados</h2>
+                <button id="refreshListBtn" class="btn-secondary">🔄 Atualizar</button>
+            </div>
+
+            <div id="loading-list" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Carregando produtos...</p>
+            </div>
+
+            <div id="productsList" class="products-grid"></div>
+        </div>
+
+        <!-- VIEW 2: Adicionar Produto -->
+        <div id="addView" class="view">
+            <div class="form-container">
+                <h2>Adicionar Novo Produto</h2>
+
+                <form id="addProductForm">
+                    <div class="form-group">
+                        <label for="productName">Nome do Produto *</label>
+                        <input
+                            type="text"
+                            id="productName"
+                            required
+                            placeholder="Ex: Notebook Dell Inspiron 15"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productDescription">Descrição</label>
+                        <textarea
+                            id="productDescription"
+                            rows="3"
+                            placeholder="Descrição detalhada do produto..."
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productCategory">Categoria *</label>
+                        <select id="productCategory" required>
+                            <option value="">Selecione uma categoria</option>
+                            <option value="Eletrônicos">Eletrônicos</option>
+                            <option value="Celulares">Celulares</option>
+                            <option value="Eletrodomésticos">Eletrodomésticos</option>
+                            <option value="Esportes">Esportes</option>
+                            <option value="Moda">Moda</option>
+                            <option value="Casa">Casa</option>
+                            <option value="Beleza">Beleza</option>
+                            <option value="Livros">Livros</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productExternalId">ID Externo (opcional)</label>
+                        <input
+                            type="text"
+                            id="productExternalId"
+                            placeholder="ID do produto no site externo"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productSiteId">Site ID (opcional)</label>
+                        <input
+                            type="text"
+                            id="productSiteId"
+                            placeholder="ID do site de origem"
+                        >
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Cadastrar Produto</button>
+                        <button type="reset" class="btn-secondary">Limpar Formulário</button>
+                    </div>
+                </form>
+
+                <div id="formMessage" class="form-message"></div>
+            </div>
+        </div>
+
+        <!-- VIEW 3: Buscar por ID -->
+        <div id="searchView" class="view">
+            <div class="search-section">
+                <h2>Buscar Produto por ID</h2>
+                <div class="search-input-group">
+                    <input
+                        type="text"
+                        id="productIdInput"
+                        placeholder="Digite o ID do Produto (ex: 507f1f77bcf86cd799439011)"
+                    >
+                    <button id="fetchButton" class="btn-primary">Buscar Detalhes</button>
+                </div>
+            </div>
+
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Carregando...</p>
+            </div>
+
+            <div id="results" class="results"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
