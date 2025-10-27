@@ -1,249 +1,198 @@
-# Aquila Microservices - Entrega do Projeto
+# 📦 Links dos Artefatos - Aquila Microservices
 
 ## 👥 Alunos
+- *Diogo Gibertoni*
+- *Murilo Paes Jeronymo*
+- *Pedro Lelis*
+- *Vinicius Carvalho*
+- *Cauê Felipe Knies Debus*
 
-- **Diogo Gibertoni**
-
----
-
-## 📦 Repositórios
-
-### GitHub (Código Fonte)
-🔗 **Repositório Público:** https://github.com/DiogoGibertoni/aquila-microservices
-
-### Docker Hub (Imagens)
-
-#### Microserviços
-- **BFF:** https://hub.docker.com/r/diogogibertoni/aquila-bff
-- **Product Service:** https://hub.docker.com/r/diogogibertoni/aquila-product-service
-- **Price Service:** https://hub.docker.com/r/diogogibertoni/aquila-price-service
-
-#### Functions
-- **Price Analyzer:** https://hub.docker.com/r/diogogibertoni/aquila-price-analyzer
-- **Event Processor:** https://hub.docker.com/r/diogogibertoni/aquila-event-processor
-
-#### Frontend
-- **Frontend:** https://hub.docker.com/r/diogogibertoni/aquila-frontend
 
 ---
 
-## 🏗️ Arquitetura do Projeto
+## 🔗 Repositório Principal
 
-### Microserviços
-1. **Product Service** (Porta 3001)
-   - Tecnologia: Node.js + Express
-   - Banco de Dados: MongoDB Atlas
-   - Responsabilidade: Gerenciamento do catálogo de produtos
-
-2. **Price Service** (Porta 3002)
-   - Tecnologia: Node.js + Express
-   - Banco de Dados: Azure SQL Server
-   - Responsabilidade: Histórico de preços dos produtos
-
-### Functions (Serverless)
-1. **Price Analyzer** (Porta 3003)
-   - Tecnologia: Node.js + Express
-   - Responsabilidade: Análise de promoções falsas
-
-2. **Event Processor** (Porta 3004)
-   - Tecnologia: Node.js + Express
-   - Banco de Dados: Azure SQL Server
-   - Responsabilidade: Processamento de eventos e persistência de preços
-
-### BFF - Backend for Frontend (Porta 3000)
-- Tecnologia: Node.js + Express
-- Responsabilidades:
-  - ✅ Agregação de dados de múltiplos serviços
-  - ✅ Proxy para CRUD dos microserviços
-  - ✅ Orquestração de eventos
-  - ✅ Endpoint de agregação: `/api/products/:id/complete`
-
-### MicroFrontEnd (Porta 8080)
-- Tecnologia: HTML5 + CSS3 + JavaScript Vanilla
-- Servidor: Nginx (Alpine)
-- Funcionalidades:
-  - Lista de produtos com preços
-  - Cadastro de novos produtos
-  - Busca por ID com histórico completo
-  - Indicadores visuais de promoções (real vs falsa)
+*GitHub:* https://github.com/DiogoGibertoni/aquila-microservices
 
 ---
 
-## 🗄️ Bancos de Dados
+## 📁 Artefatos Específicos no GitHub
 
-### MongoDB Atlas (Free Tier)
-- **Microserviço:** Product Service
-- **Uso:** Armazenamento de catálogo de produtos
-- **Tabela:** products
+### 🏗 Microserviços
 
-### Azure SQL Server (Free 1 DTU)
-- **Microserviços:** Price Service, Event Processor
-- **Uso:** Histórico de preços e análise
-- **Tabela:** prices
+#### Product Service
+- *Código:* https://github.com/DiogoGibertoni/aquila-microservices/tree/main/microservices/product-service
+- *Dockerfile:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/microservices/product-service/Dockerfile
+- *server.js:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/microservices/product-service/server.js
+- *package.json:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/microservices/product-service/package.json
 
----
-
-## 🔄 Fluxos Principais
-
-### 1. Agregação de Dados (GET)
-```
-Cliente → BFF (/api/products/:id/complete)
-        ↓
-        → Product Service (busca produto)
-        → Price Service (busca histórico de preços)
-        ↓
-        ← Agregação dos dados
-        ← Response ao cliente
-```
-
-### 2. Criação de Preço via Evento (POST)
-```
-Cliente → BFF (/api/prices)
-        ↓
-        → Event Processor (/process-price-event)
-        ↓
-        → Azure SQL Server (persiste preço)
-        ↓
-        ← Response ao cliente
-```
-
-### 3. Análise de Promoção Falsa
-```
-Cliente → BFF (/api/analyze-price)
-        ↓
-        → Price Analyzer
-        → Price Service (busca histórico)
-        ↓
-        ← Calcula média histórica
-        ← Detecta se é promoção falsa
-        ↓
-        ← Response ao cliente
-```
+#### Price Service
+- *Código:* https://github.com/DiogoGibertoni/aquila-microservices/tree/main/microservices/price-service
+- *Dockerfile:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/microservices/price-service/Dockerfile
+- *server.js:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/microservices/price-service/server.js
+- *package.json:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/microservices/price-service/package.json
 
 ---
 
-## 📋 Requisitos Atendidos
+### ⚡ Functions
 
-✅ **2 Microserviços criados**
-- Product Service (Node.js + MongoDB Atlas)
-- Price Service (Node.js + Azure SQL Server)
+#### Price Analyzer Function
+- *Código:* https://github.com/DiogoGibertoni/aquila-microservices/tree/main/functions/price-analyzer
+- *Dockerfile:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/functions/price-analyzer/Dockerfile
+- *index.js:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/functions/price-analyzer/index.js
+- *package.json:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/functions/price-analyzer/package.json
 
-✅ **2 Functions criadas**
-- Price Analyzer (análise de promoções)
-- Event Processor (processamento de eventos)
-
-✅ **BFF implementado**
-- Agregação de dados
-- Proxy para CRUD
-- Request HTTP para functions e microserviços
-- CREATE via evento
-
-✅ **MicroFrontEnd criado**
-- HTML + CSS + JavaScript puro
-- Dockerizado com Nginx
-
-✅ **Bancos de Dados**
-- MongoDB Atlas Free
-- Azure SQL Server Free (1 DTU)
-
-✅ **Publicação**
-- GitHub público
-- Docker Hub público
+#### Event Processor Function (Notification Service)
+- *Código:* https://github.com/DiogoGibertoni/aquila-microservices/tree/main/functions/notification-service
+- *Dockerfile:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/functions/notification-service/Dockerfile
+- *index.js:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/functions/notification-service/index.js
+- *package.json:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/functions/notification-service/package.json
 
 ---
 
-## 🚀 Como Executar
+### 🌐 BFF (Backend for Frontend)
 
-### Pré-requisitos
-- Docker e Docker Compose instalados
-- Node.js (para scripts de população)
+- *Código:* https://github.com/DiogoGibertoni/aquila-microservices/tree/main/bff
+- *Dockerfile:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/bff/Dockerfile
+- *server.js:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/bff/server.js
+- *package.json:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/bff/package.json
+- *.env:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/bff/.env
 
-### Passo 1: Clonar o repositório
-```bash
-git clone https://github.com/DiogoGibertoni/aquila-microservices.git
-cd aquila-microservices
-```
+---
 
-### Passo 2: Configurar variáveis de ambiente
-Edite o arquivo `.env` na raiz do projeto com suas credenciais do MongoDB Atlas e Azure SQL Server.
+### 📱 MicroFrontEnd
 
-### Passo 3: Subir os serviços
-```bash
-docker-compose up -d
-```
+- *Código:* https://github.com/DiogoGibertoni/aquila-microservices/tree/main/frontend
+- *Dockerfile:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/frontend/Dockerfile
+- *index.html:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/frontend/index.html
+- *app.js:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/frontend/app.js
+- *styles.css:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/frontend/styles.css
 
-### Passo 4: Inicializar banco de dados
-```bash
-cd scripts
-npm install
-npm run init-azure
-```
+---
 
-### Passo 5: Popular com dados de teste
-```bash
-npm run populate
-```
+### 🐳 Docker Compose
 
-### Passo 6: Acessar o frontend
-Abra o navegador em: http://localhost:8080
+- *docker-compose.yml:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/docker-compose.yml
+- *.env (raiz):* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/.env
+
+---
+
+### 📚 Documentação
+
+#### Swagger/OpenAPI
+- *swagger.yaml:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/docs/swagger.yaml
+
+#### Diagramas
+- *Modelo de Dados:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/diagrams/data-model.md
+
+- *ENTREGA.md:* https://github.com/DiogoGibertoni/aquila-microservices/blob/main/ENTREGA.md
+
+---
+
+## 🐳 Docker Hub
+
+### Imagens Publicadas
+
+| Serviço | Link Docker Hub |
+|---------|-----------------|
+| *BFF* | https://hub.docker.com/r/diogogibertoni/aquila-bff |
+| *Product Service* | https://hub.docker.com/r/diogogibertoni/aquila-product-service |
+| *Price Analyzer* | https://hub.docker.com/r/diogogibertoni/aquila-price-analyzer |
+| *Event Processor* | https://hub.docker.com/r/diogogibertoni/aquila-event-processor |
+
+---
+
+## 📊 Estrutura do Repositório
+
+
+aquila-microservices/
+├── bff/                          → Backend for Frontend
+│   ├── server.js
+│   ├── Dockerfile
+│   └── package.json
+│
+├── microservices/
+│   ├── product-service/          → Serviço de Produtos (MongoDB)
+│   │   ├── server.js
+│   │   ├── Dockerfile
+│   │   └── package.json
+│   │
+│   └── price-service/            → Serviço de Preços (Azure SQL)
+│       ├── server.js
+│       ├── Dockerfile
+│       └── package.json
+│
+├── functions/
+│   ├── price-analyzer/           → Análise de Promoção Falsa
+│   │   ├── index.js
+│   │   ├── Dockerfile
+│   │   └── package.json
+│   │
+│   └── notification-service/     → Event Processor
+│       ├── index.js
+│       ├── Dockerfile
+│       └── package.json
+│
+├── frontend/                     → MicroFrontEnd
+│   ├── index.html
+│   ├── app.js
+│   ├── styles.css
+│   ├── Dockerfile
+│   └── README.md
+│
+├── scripts/                      → Scripts de População
+│   ├── populate-database.js
+│   ├── init-azure-db.js
+│   ├── clean-database.js
+│   └── README.md
+│
+├── docs/
+│   └── swagger.yaml              → Documentação OpenAPI
+│
+├── diagrams/
+│   └── data-model.md             → Modelo de Dados
+│
+├── docker-compose.yml            → Orquestração de Containers
+├── .env                          → Variáveis de Ambiente
+├── README.md                     → Documentação Principal
+└── ENTREGA.md                    → Informações de Entrega
+
 
 ---
 
 ## 🌐 Endpoints Principais
 
 ### BFF (http://localhost:3000)
-- `GET /api/products` - Lista todos os produtos
-- `GET /api/products/:id` - Busca produto por ID
-- `GET /api/products/:id/complete` - **Agregação** (produto + histórico)
-- `POST /api/products` - Cria novo produto
-- `PUT /api/products/:id` - Atualiza produto
-- `DELETE /api/products/:id` - Remove produto
-- `POST /api/prices` - Cria preço via evento
-- `GET /api/prices/product/:productId` - Histórico de preços
-- `POST /api/analyze-price` - Analisa promoção falsa
+- GET /api/products/:id/complete - *Agregação* (produto + histórico)
+- GET /api/products - Lista produtos
+- POST /api/products - Cria produto
+- POST /api/prices - Cria preço via evento
+- POST /api/analyze-price - Analisa promoção falsa
 
 ### Product Service (http://localhost:3001)
-- CRUD completo de produtos
+- GET /products - Lista produtos
+- POST /products - Cria produto
+- PUT /products/:id - Atualiza produto
+- DELETE /products/:id - Remove produto
 
 ### Price Service (http://localhost:3002)
-- Consulta de histórico de preços
+- GET /prices - Lista preços
+- GET /prices/product/:productId - Histórico de preços
 
 ### Price Analyzer (http://localhost:3003)
-- `POST /analyze-price` - Análise de promoção falsa
+- POST /analyze-price - Análise de promoção falsa
 
 ### Event Processor (http://localhost:3004)
-- `POST /process-price-event` - Processa evento de preço
+- POST /process-price-event - Processa evento de preço
 
 ---
 
-## 📊 Documentação Adicional
+## 📝 Tecnologias
 
-- **Swagger/OpenAPI:** `/docs/swagger.yaml`
-- **Modelo de Dados:** `/diagrams/data-model.md`
-- **Scripts de População:** `/scripts/`
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-- **Backend:** Node.js, Express.js
-- **Frontend:** HTML5, CSS3, JavaScript Vanilla
-- **Bancos de Dados:** MongoDB Atlas, Azure SQL Server
-- **Containerização:** Docker, Docker Compose
-- **Servidor Web:** Nginx (Alpine)
-- **Outras:** Axios, CORS, dotenv, Mongoose, mssql
+- *Backend:* Node.js, Express.js
+- *Frontend:* HTML5, CSS3, JavaScript Vanilla
+- *Bancos:* MongoDB Atlas, Azure SQL Server
+- *Container:* Docker, Docker Compose
+- *Servidor Web:* Nginx Alpine
 
 ---
-
-## 📝 Observações
-
-- Frontend acessível via porta 8080 (porta 80 conflitava com XAMPP)
-- Todos os serviços possuem health checks
-- Detecção de promoções falsas baseada em média histórica
-- Interface responsiva com indicadores visuais de promoção
-- Dados de teste incluem 8 produtos com 30 dias de histórico cada
-
----
-
-**Data de Entrega:** 26/10/2025
-**Disciplina:** Arquitetura de Software / Microserviços
